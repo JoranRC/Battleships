@@ -27,6 +27,15 @@ public class Game {
 
     public Game(Gui gui) {
         this.gui = gui;
+
+        for(int i=0; i<gui.buttons.length; i++) {
+            for(int j=0; j<gui.buttons[i].length; j++) {
+                int[] integerArrayToButton = {i,j};
+                HandlerClass handler = new HandlerClass(integerArrayToButton, this);
+                gui.buttons[i][j].addActionListener(handler);
+            }
+        }
+
         int[] integerArrayTest = {0,0};
         HandlerClass handler = new HandlerClass(integerArrayTest, this);
         gui.buttons[0][0].addActionListener(handler);
@@ -173,9 +182,11 @@ public class Game {
                 int[] excludePosition = {--leftSide,rightSide};
                 System.out.println(excludePosition[0]);
                 System.out.println(excludePosition[1]);
-                int[] excludePosition2 = {++leftSide, rightSide};
+                int[] excludePosition2 = {leftSide+=2, rightSide};
+                leftSide-=1;
                 int[] excludePosition3 = {leftSide,--rightSide};
-                int[] excludePosition4 = {leftSide, ++rightSide};
+                int[] excludePosition4 = {leftSide, rightSide+=2};
+                rightSide-=1;
                 excludeList.add(excludePosition);
                 excludeList.add(excludePosition2);
                 excludeList.add(excludePosition3);
