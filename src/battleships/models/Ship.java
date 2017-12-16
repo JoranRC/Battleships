@@ -4,23 +4,23 @@ import java.util.ArrayList;
 
 public class Ship {
 
-    private boolean orientation;
+    private int orientation;
     private boolean afloat;
     private int shipLength;
-    private ArrayList<Integer> location;
+    private ArrayList<Integer[]> location;
 
-    public Ship(boolean orientation, boolean afloat, int shipLength, ArrayList<Integer> location) {
+    public Ship(int orientation, boolean afloat, int shipLength, ArrayList<Integer[]> location) {
         this.orientation = orientation;
         this.afloat = afloat;
         this.shipLength = shipLength;
         this.location = location;
     }
 
-    public boolean isOrientation() {
+    public int getOrientation() {
         return orientation;
     }
 
-    public void setOrientation(boolean orientation) {
+    public void setOrientation(int orientation) {
         this.orientation = orientation;
     }
 
@@ -40,11 +40,11 @@ public class Ship {
         this.shipLength = shipLength;
     }
 
-    public ArrayList<Integer> getLocation() {
+    public ArrayList<Integer[]> getLocation() {
         return location;
     }
 
-    public void setLocation(ArrayList<Integer> location) {
+    public void setLocation(ArrayList<Integer[]> location) {
         this.location = location;
     }
 }
