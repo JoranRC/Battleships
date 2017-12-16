@@ -15,8 +15,8 @@ public class Game {
     Ship ship2;
     Ship ship3;
     Ship ship4;
-    public static int orientation = 0;
-    public static int shipLength = 4;
+    public static int orientation = 1;
+    public static int shipLength = 1;
     public static ArrayList<int[]> excludeList = new ArrayList<>();
 
 
@@ -92,11 +92,13 @@ public class Game {
                     location.add(integerArray);
                     break;
                 case 2:
+                    location.add(integerArray);
                     integerArray1[0] = startL + 1;
                     integerArray1[1] = startR;
                     location.add(integerArray1);
                     break;
                 case 3:
+                    location.add(integerArray);
                     integerArray1[0] = startL + 1;
                     integerArray1[1] = startR;
                     location.add(integerArray1);
@@ -105,6 +107,7 @@ public class Game {
                     location.add(integerArray2);
                     break;
                 case 4:
+                    location.add(integerArray);
                     integerArray1[0] = startL + 1;
                     integerArray1[1] = startR;
                     location.add(integerArray1);
@@ -147,7 +150,7 @@ public class Game {
         return false;
     }
 
-    public void placeShip(int orientation, int shipLength, int[] startLocation){
+    public void placeShip(int orientation, int[] startLocation){
         if(returnApprovedLocation(orientation, shipLength, startLocation) == null){
             JOptionPane.showMessageDialog(null, "The ship cannot be placed here");
         } else {
@@ -162,15 +165,19 @@ public class Game {
             switch(shipLength){
                 case 1:
                     ship1 = new Ship(orientation, true, shipLength, approvedLocation);
+                    shipLength++;
                     break;
                 case 2:
                     ship2 = new Ship(orientation, true, shipLength, approvedLocation);
+                    shipLength++;
                     break;
                 case 3:
                     ship3 = new Ship(orientation, true, shipLength, approvedLocation);
+                    shipLength++;
                     break;
                 case 4:
                     ship4 = new Ship(orientation, true, shipLength, approvedLocation);
+                    gui.disableButtonsBoard();
                     break;
                 default:
                     break;

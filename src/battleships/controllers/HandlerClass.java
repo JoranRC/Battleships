@@ -15,7 +15,7 @@ public class HandlerClass implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent event) {
-        gameController.placeShip(Game.orientation, Game.shipLength, arguments);
+        gameController.placeShip(Game.orientation, arguments);
     }
 
 

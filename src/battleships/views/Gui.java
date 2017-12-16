@@ -98,9 +98,13 @@ public class Gui {
         frame.add(sidePanelLeft, BorderLayout.WEST);
         frame.add(sidePanelRight, BorderLayout.EAST);
         frame.add(boardAll, BorderLayout.CENTER);
+    }
 
-
-
-
+    public void disableButtonsBoard(){
+        for(int i=0; i<buttons.length; i++) {
+            for(int j=0; j<buttons[i].length; j++) {
+                buttons[i][j].setEnabled(false);
+            }
+        }
     }
 }
