@@ -1,8 +1,12 @@
 package battleships.views;
 
+import battleships.controllers.Game;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Gui {
 
@@ -31,6 +35,7 @@ public class Gui {
     public JButton connect = new JButton("Connect to a host");
     public JButton closeconnection = new JButton("Close connection");
     public JButton sendCoordinates = new JButton("Send Coordinates");
+    public JButton changeOrientation = new JButton("Orientation: Horizontal");
     public JLabel whatisIP = new JLabel();
     public JPanel menuBar = new JPanel(new GridLayout(4,0));
     public JPanel fill = new JPanel();
@@ -71,6 +76,19 @@ public class Gui {
         menuBar.add(sendCoordinates);
         menuBar.add(whatisIP);
         fill.setPreferredSize(new Dimension(210,80));
+        changeOrientation.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent event) {
+                        if(Game.orientation == 0){
+                            Game.orientation = 1;
+                            changeOrientation.setText("Orientation: Vertical");
+                        } else {
+                            Game.orientation = 0;
+                            changeOrientation.setText("Orientation: Horizontal");
+                        }
+                    }
+                });
+        fill.add(changeOrientation);
         fill.setBackground(Color.WHITE);
         infoPanelRight.setPreferredSize(new Dimension(210, 460));
         infoPanelRight.setBackground(Color.WHITE);

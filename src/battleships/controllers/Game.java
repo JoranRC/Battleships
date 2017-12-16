@@ -15,7 +15,7 @@ public class Game {
     Ship ship2;
     Ship ship3;
     Ship ship4;
-    public static int orientation = 1;
+    public static int orientation = 0;
     public static int shipLength = 1;
     public static ArrayList<int[]> excludeList = new ArrayList<>();
 
