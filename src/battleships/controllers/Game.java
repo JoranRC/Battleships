@@ -14,8 +14,9 @@ public class Game {
     Ship ship2;
     Ship ship3;
     Ship ship4;
-    public static int orientation = 1;
+    public static int orientation = 0;
     public static int shipLength = 4;
+    public static ArrayList<int[]> excludeList = new ArrayList<>();
 
     ImageIcon ship = new ImageIcon(Gui.class.getResource("Ship.png"));
     ImageIcon shipHit = new ImageIcon(Gui.class.getResource("Shiphit.png"));
@@ -45,11 +46,13 @@ public class Game {
                     location.add(integerArray);
                     break;
                 case 2:
+                    location.add(integerArray);
                     integerArray1[0] = startL;
                     integerArray1[1] = startR + 1;
                     location.add(integerArray1);
                     break;
                 case 3:
+                    location.add(integerArray);
                     integerArray1[0] = startL;
                     integerArray1[1] = startR + 1;
                     location.add(integerArray1);
@@ -58,6 +61,7 @@ public class Game {
                     location.add(integerArray2);
                     break;
                 case 4:
+                    location.add(integerArray);
                     integerArray1[0] = startL;
                     integerArray1[1] = startR + 1;
                     location.add(integerArray1);
@@ -74,6 +78,7 @@ public class Game {
         } else {
             switch(shipLength){
                 case 1:
+                    location.add(integerArray);
                     break;
                 case 2:
                     integerArray1[0] = startL + 1;
@@ -105,8 +110,7 @@ public class Game {
         }
 
         int arrayListLength = location.size();
-        arrayListLength -=1;
-        System.out.println(arrayListLength);
+        arrayListLength--;
         int[] returnIntegerArray = location.get(arrayListLength);
         startL = returnIntegerArray[0];
         startR = returnIntegerArray[1];
@@ -146,13 +150,26 @@ public class Game {
             for(int[] integerArray : approvedLocation){
                 int leftSide = integerArray[0];
                 int rightSide = integerArray[1];
+                int[] excludePosition = {--leftSide,rightSide};
+                System.out.println(excludePosition[0]);
+                System.out.println(excludePosition[1]);
+                int[] excludePosition2 = {++leftSide, rightSide};
+                int[] excludePosition3 = {leftSide,--rightSide};
+                int[] excludePosition4 = {leftSide, ++rightSide};
+                excludeList.add(excludePosition);
+                excludeList.add(excludePosition2);
+                excludeList.add(excludePosition3);
+                excludeList.add(excludePosition4);
+                excludeList.add(integerArray);
+                System.out.println(excludeList);
                 gui.buttons[leftSide][rightSide].setIcon(ship);
+                gui.buttons[leftSide][rightSide].setDisabledIcon(ship);
+                gui.buttons[leftSide][rightSide].setEnabled(false);
             }
 
 
         }
 
     }
-
 
 }
