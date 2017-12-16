@@ -14,6 +14,8 @@ public class Game {
     Ship ship2;
     Ship ship3;
     Ship ship4;
+    public static int orientation = 1;
+    public static int shipLength = 4;
 
     ImageIcon ship = new ImageIcon(Gui.class.getResource("Ship.png"));
     ImageIcon shipHit = new ImageIcon(Gui.class.getResource("Shiphit.png"));
@@ -22,13 +24,17 @@ public class Game {
 
     public Game(Gui gui) {
         this.gui = gui;
+        int[] integerArrayTest = {0,0};
+        HandlerClass handler = new HandlerClass(integerArrayTest, this);
+        gui.buttons[0][0].addActionListener(handler);
     }
 
-    public ArrayList<Integer[]> returnApprovedLocation(int orientation, int shipLength, ArrayList<Integer[]> location){
-        Integer[] integerArray = location.get(0);
-        Integer[] integerArray1 = new Integer[2];
-        Integer[] integerArray2 = new Integer[2];
-        Integer[] integerArray3 = new Integer[2];
+    public ArrayList<int[]> returnApprovedLocation(int orientation, int shipLength, int[] startLocation){
+        ArrayList<int[]> location = new ArrayList<>();
+        int[] integerArray = startLocation;
+        int[] integerArray1 = new int[2];
+        int[] integerArray2 = new int[2];
+        int[] integerArray3 = new int[2];
 
         int startL = integerArray[0];
         int startR = integerArray[1];
@@ -36,6 +42,7 @@ public class Game {
         if(orientation == 0){
             switch(shipLength){
                 case 1:
+                    location.add(integerArray);
                     break;
                 case 2:
                     integerArray1[0] = startL;
@@ -98,7 +105,9 @@ public class Game {
         }
 
         int arrayListLength = location.size();
-        Integer[] returnIntegerArray = location.get(arrayListLength - 1);
+        arrayListLength -=1;
+        System.out.println(arrayListLength);
+        int[] returnIntegerArray = location.get(arrayListLength);
         startL = returnIntegerArray[0];
         startR = returnIntegerArray[1];
 
@@ -110,12 +119,12 @@ public class Game {
         }
     }
 
-    public void placeShip(int orientation, int shipLength, ArrayList<Integer[]> startLocation){
+    public void placeShip(int orientation, int shipLength, int[] startLocation){
         if(returnApprovedLocation(orientation, shipLength, startLocation) == null){
             JOptionPane.showMessageDialog(null, "The ship cannot be placed here");
         } else {
 
-            ArrayList<Integer[]> approvedLocation = returnApprovedLocation(orientation, shipLength, startLocation);
+            ArrayList<int[]> approvedLocation = returnApprovedLocation(orientation, shipLength, startLocation);
 
             switch(shipLength){
                 case 1:
@@ -134,7 +143,7 @@ public class Game {
                     break;
             }
 
-            for(Integer[] integerArray : approvedLocation){
+            for(int[] integerArray : approvedLocation){
                 int leftSide = integerArray[0];
                 int rightSide = integerArray[1];
                 gui.buttons[leftSide][rightSide].setIcon(ship);

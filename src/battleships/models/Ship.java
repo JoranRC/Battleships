@@ -7,9 +7,9 @@ public class Ship {
     private int orientation;
     private boolean afloat;
     private int shipLength;
-    private ArrayList<Integer[]> location;
+    private ArrayList<int[]> location;
 
-    public Ship(int orientation, boolean afloat, int shipLength, ArrayList<Integer[]> location) {
+    public Ship(int orientation, boolean afloat, int shipLength, ArrayList<int[]> location) {
         this.orientation = orientation;
         this.afloat = afloat;
         this.shipLength = shipLength;
@@ -40,11 +40,11 @@ public class Ship {
         this.shipLength = shipLength;
     }
 
-    public ArrayList<Integer[]> getLocation() {
+    public ArrayList<int[]> getLocation() {
         return location;
     }
 
-    public void setLocation(ArrayList<Integer[]> location) {
+    public void setLocation(ArrayList<int[]> location) {
         this.location = location;
     }
 }
