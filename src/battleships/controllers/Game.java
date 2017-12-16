@@ -6,6 +6,7 @@ import com.sun.org.apache.xalan.internal.xsltc.util.IntegerArray;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Game {
 
@@ -17,6 +18,7 @@ public class Game {
     public static int orientation = 0;
     public static int shipLength = 4;
     public static ArrayList<int[]> excludeList = new ArrayList<>();
+
 
     ImageIcon ship = new ImageIcon(Gui.class.getResource("Ship.png"));
     ImageIcon shipHit = new ImageIcon(Gui.class.getResource("Shiphit.png"));
@@ -30,7 +32,7 @@ public class Game {
         gui.buttons[0][0].addActionListener(handler);
     }
 
-    public ArrayList<int[]> returnApprovedLocation(int orientation, int shipLength, int[] startLocation){
+    private ArrayList<int[]> returnApprovedLocation(int orientation, int shipLength, int[] startLocation){
         ArrayList<int[]> location = new ArrayList<>();
         int[] integerArray = startLocation;
         int[] integerArray1 = new int[2];
@@ -117,10 +119,23 @@ public class Game {
 
         try{
             gui.buttons[startL][startR].setEnabled(false);
+            gui.buttons[startL][startR].setEnabled(true);
             return location;
         }catch(ArrayIndexOutOfBoundsException ae){
             return null;
         }
+    }
+
+    private boolean checkExcludeList(ArrayList<int[]> locationToBeChecked) {
+        for(int[] intCoordinateToBeChecked : locationToBeChecked){
+            for(int[] intCoordinateInExcludeList : excludeList ){
+                if(Arrays.equals(intCoordinateToBeChecked, intCoordinateInExcludeList)){
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     public void placeShip(int orientation, int shipLength, int[] startLocation){
@@ -129,6 +144,11 @@ public class Game {
         } else {
 
             ArrayList<int[]> approvedLocation = returnApprovedLocation(orientation, shipLength, startLocation);
+
+            if(checkExcludeList(approvedLocation)){
+                JOptionPane.showMessageDialog(null, "The ship cannot be placed here");
+                return;
+            }
 
             switch(shipLength){
                 case 1:
