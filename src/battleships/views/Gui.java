@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 public class Gui {
 
     public String afloatStatusTrue = "Afloat and battle ready";
-    public String afloatStatusFlase = "Sunk to the bottom of the sea";
+    public String afloatStatusFlase = "Sunk";
     public JFrame frame = new JFrame("Capple games: Battleships");
     public JPanel boardAll = new JPanel(new GridLayout(0,2));
     public JPanel board = new JPanel(new GridLayout(10,10));
@@ -40,9 +40,9 @@ public class Gui {
     public JPanel menuBar = new JPanel(new GridLayout(4,0));
     public JPanel fill = new JPanel();
 
-    ImageIcon ship = new ImageIcon(getClass().getResource("Ship.png"));
-    ImageIcon shipHit = new ImageIcon(getClass().getResource("Shiphit.png"));
-    ImageIcon bomb = new ImageIcon(getClass().getResource("Bomb.png"));
+    public static ImageIcon ship = new ImageIcon(Gui.class.getResource("Ship.png"));
+    public static ImageIcon shipHit = new ImageIcon(Gui.class.getResource("Shiphit.png"));
+    public static ImageIcon bomb = new ImageIcon(Gui.class.getResource("Bomb.png"));
 
     public Gui(){
 

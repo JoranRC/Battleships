@@ -15,6 +15,10 @@ public class Game {
     Ship ship2;
     Ship ship3;
     Ship ship4;
+    Ship shipOP;
+    Ship ship2OP;
+    Ship ship3OP;
+    Ship ship4OP;
     public static int orientation = 0;
     public static int shipLength = 1;
     public static ArrayList<int[]> excludeList = new ArrayList<>();
@@ -28,6 +32,17 @@ public class Game {
     public Game(Gui gui) {
         this.gui = gui;
 
+        //Let OP! Puur om te testen!
+        int[] test1 = {2,1};
+        int[] test2 = {2,2};
+        int[] test3 = {2,3};
+        ArrayList<int[]> testArrayLocation = new ArrayList<>();
+        testArrayLocation.add(test1);
+        testArrayLocation.add(test2);
+        testArrayLocation.add(test3);
+        ship3OP = new Ship(orientation, true,3, testArrayLocation);
+
+        //hier begint het echte werk pas!
         for(int i=0; i<gui.buttons.length; i++) {
             for(int j=0; j<gui.buttons[i].length; j++) {
                 int[] integerArrayToButton = {i,j};
@@ -35,6 +50,16 @@ public class Game {
                 gui.buttons[i][j].addActionListener(handler);
             }
         }
+
+        for(int i=0; i<gui.buttons2.length; i++) {
+            for(int j=0; j<gui.buttons2[i].length; j++) {
+                int[] integerArrayToButton = {i,j};
+                HandlerClass2 handler = new HandlerClass2(integerArrayToButton, this, gui);
+                gui.buttons2[i][j].addActionListener(handler);
+            }
+        }
+
+
 
         int[] integerArrayTest = {0,0};
         HandlerClass handler = new HandlerClass(integerArrayTest, this);
@@ -209,5 +234,6 @@ public class Game {
         }
 
     }
+
 
 }
