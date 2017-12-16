@@ -4,15 +4,20 @@ import battleships.models.Ship;
 import battleships.views.Gui;
 import com.sun.org.apache.xalan.internal.xsltc.util.IntegerArray;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class Game {
 
     Gui gui;
-    Ship ship;
+    Ship ship1;
     Ship ship2;
     Ship ship3;
     Ship ship4;
+
+    ImageIcon ship = new ImageIcon(Gui.class.getResource("Ship.png"));
+    ImageIcon shipHit = new ImageIcon(Gui.class.getResource("Shiphit.png"));
+    ImageIcon bomb = new ImageIcon(Gui.class.getResource("Bomb.png"));
 
 
     public Game(Gui gui) {
@@ -106,22 +111,38 @@ public class Game {
     }
 
     public void placeShip(int orientation, int shipLength, ArrayList<Integer[]> startLocation){
-        
-        if(ship == null){
-            ship = new Ship(orientation, true, shipLength, startLocation);
-            return;
-        } else if(ship2 == null){
-            ship2 = new Ship(orientation, true, shipLength, startLocation);
-            return;
-        } else if(ship3 == null){
-            ship3 = new Ship(orientation, true, shipLength, startLocation);
-            return;
-        } else if(ship4 == null){
-            ship4 = new Ship(orientation, true, shipLength, startLocation);
-            return;
+        if(returnApprovedLocation(orientation, shipLength, startLocation) == null){
+            JOptionPane.showMessageDialog(null, "The ship cannot be placed here");
         } else {
-            return;
+
+            ArrayList<Integer[]> approvedLocation = returnApprovedLocation(orientation, shipLength, startLocation);
+
+            switch(shipLength){
+                case 1:
+                    ship1 = new Ship(orientation, true, shipLength, approvedLocation);
+                    break;
+                case 2:
+                    ship2 = new Ship(orientation, true, shipLength, approvedLocation);
+                    break;
+                case 3:
+                    ship3 = new Ship(orientation, true, shipLength, approvedLocation);
+                    break;
+                case 4:
+                    ship4 = new Ship(orientation, true, shipLength, approvedLocation);
+                    break;
+                default:
+                    break;
+            }
+
+            for(Integer[] integerArray : approvedLocation){
+                int leftSide = integerArray[0];
+                int rightSide = integerArray[1];
+                gui.buttons[leftSide][rightSide].setIcon(ship);
+            }
+
+
         }
+
     }
 
 
