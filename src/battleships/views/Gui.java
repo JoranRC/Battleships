@@ -129,7 +129,7 @@ public class Gui {
     public void enableButtonsBoard(){
         for(int i=0; i<buttons.length; i++) {
             for(int j=0; j<buttons[i].length; j++) {
-                buttons[i][j].setEnabled(false);
+                buttons[i][j].setEnabled(true);
             }
         }
     }
@@ -145,7 +145,7 @@ public class Gui {
     public void enableButtonsBoard2(){
         for(int i=0; i<buttons2.length; i++) {
             for(int j=0; j<buttons2[i].length; j++) {
-                buttons2[i][j].setEnabled(false);
+                buttons2[i][j].setEnabled(true);
             }
         }
     }

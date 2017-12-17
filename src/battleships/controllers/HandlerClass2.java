@@ -6,6 +6,7 @@ import battleships.views.Gui;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Arrays;
 
 public class HandlerClass2 implements ActionListener {
@@ -55,6 +56,13 @@ public class HandlerClass2 implements ActionListener {
     public void actionPerformed(ActionEvent event) {
         int leftSide = arguments[0];
         int rightSide = arguments[1];
+        try {
+            Connection.output.writeObject(arguments);
+            Connection.output.flush();
+        }catch(IOException ioException) {
+            ioException.printStackTrace();
+        }
+        gui.disableButtonsBoard2();
         if(shipHit(gameController.ship3OP, leftSide, rightSide)){
             if(!gameController.ship3OP.isAfloat()){
                 gui.battleShip.setText("BATTLESHIP \n" + "Status: " + gui.afloatStatusFlase);

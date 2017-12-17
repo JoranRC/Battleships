@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class Ship {
 
-    private int orientation;
-    private boolean afloat;
-    private int shipLength;
-    private ArrayList<int[]> location;
+    public int orientation;
+    public boolean afloat;
+    public int shipLength;
+    public ArrayList<int[]> location;
 
     public Ship(int orientation, boolean afloat, int shipLength, ArrayList<int[]> location) {
         this.orientation = orientation;

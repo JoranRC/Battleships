@@ -21,6 +21,7 @@ public class Connection {
 
     Gui gui;
     Game gameController;
+    private boolean didUSend = false;
     private static Socket connection;
     private static Socket serverConnection;
     private static ServerSocket server;
@@ -41,8 +42,6 @@ public class Connection {
     public Connection(Gui gui, Game gameController) {
         this.gui = gui;
         this.gameController = gameController;
-        gui.disableButtonsBoard2();
-        gui.disableButtonsBoard();
 
         gui.connect.addActionListener(
                 new ActionListener() {
@@ -54,10 +53,9 @@ public class Connection {
                             SetupStreams();
                             timer.schedule(task, 1000);
                             gui.connect.setEnabled(false);
-                            gui.enableButtonsBoard2();
                         }catch(IOException ioException) {
                             ioException.printStackTrace();
-                            JOptionPane.showMessageDialog(null, "This server is unreacheable or not online");
+                            JOptionPane.showMessageDialog(null, "This server is unreachable");
                         }
 
                     }
@@ -67,19 +65,20 @@ public class Connection {
                 new ActionListener() {
 
                     public void actionPerformed(ActionEvent event) {
-                        ArrayList<Ship> shipsToSend = new ArrayList<Ship>();
-                        shipsToSend.add(gameController.ship1);
-                        shipsToSend.add(gameController.ship2);
-                        shipsToSend.add(gameController.ship3);
-                        shipsToSend.add(gameController.ship4);
+                        ArrayList<ArrayList> shipsToSend = new ArrayList<>();
+                        shipsToSend.add(gameController.ship1.getLocation());
+                        shipsToSend.add(gameController.ship2.getLocation());
+                        shipsToSend.add(gameController.ship3.getLocation());
+                        shipsToSend.add(gameController.ship4.getLocation());
+
                         try {
                             output.writeObject(shipsToSend);
                             output.flush();
                             gui.sendCoordinates.setEnabled(false);
-                            gui.enableButtonsBoard();
+                            didUSend = true;
                         }catch(IOException ioException) {
                             ioException.printStackTrace();
-                        };
+                        }
                     }
                 });
         gui.closeconnection.addActionListener(
@@ -111,9 +110,8 @@ public class Connection {
                 connection = serverConnection;
                 SetupStreams();
                 gui.connect.setEnabled(false);
-                gui.enableButtonsBoard();
-                inputBegin();
                 noConnection = false;
+                inputBegin();
             }catch(IOException ioException) {
                 ioException.printStackTrace();
             }
@@ -131,21 +129,24 @@ public class Connection {
     }
 
     public void inputBegin() {
+        noConnection = false;
+        ArrayList<ArrayList> receivedShips;
 
-        ArrayList<Ship> receivedShips;
-
+        gui.enableButtonsBoard();
         while(inputListening) {
             try {
-                receivedShips = (ArrayList<Ship>) input.readObject();
+                receivedShips = (ArrayList<ArrayList>) input.readObject();
                 if(receivedShips.isEmpty()) {
 
                 }else {
-                    gameController.shipOP = receivedShips.get(0);
-                    gameController.ship2OP = receivedShips.get(1);
-                    gameController.ship3OP = receivedShips.get(2);
-                    gameController.ship4OP = receivedShips.get(3);
+                    gameController.shipOP.setLocation(receivedShips.get(0));
+                    gameController.ship2OP.setLocation(receivedShips.get(1));
+                    gameController.ship3OP.setLocation(receivedShips.get(2));
+                    gameController.ship4OP.setLocation(receivedShips.get(3));
                     inputListening = false;
-                    gui.enableButtonsBoard();
+                    if(didUSend){
+                        gui.enableButtonsBoard2();
+                    }
                     inputSecond();
                 }
             }catch(ClassNotFoundException classNotFoundException) {
@@ -179,7 +180,7 @@ public class Connection {
                     newShip.setAfloat(false);
                 }
                 if(checkIfGameOver()){
-                    JOptionPane.showMessageDialog(null, "Congrats, you won!");
+                    JOptionPane.showMessageDialog(null, "I'm sorry, but you are not the winner of this game!");
                     System.exit(0);
                 }
                 return true;
@@ -196,35 +197,33 @@ public class Connection {
                 if(receivedIntArray == null){
 
                 }else{
+
+                    gui.enableButtonsBoard2();
+
                     if(shipHit(gameController.ship3, receivedIntArray)){
                         if(!gameController.ship3.isAfloat()){
                             gui.battleShip2.setText("BATTLESHIP \n" + "Status: " + gui.afloatStatusFlase);
                         }
-                        return;
-                    }
-                    if(shipHit(gameController.ship1, receivedIntArray)){
+                    } else if(shipHit(gameController.ship1, receivedIntArray)){
                         if(!gameController.ship1.isAfloat()){
                             gui.submarine2.setText("SUBMARINE \n" + "Status: " + gui.afloatStatusFlase);
                         }
-                        return;
-                    }
-                    if(shipHit(gameController.ship2, receivedIntArray)){
+                    } else if(shipHit(gameController.ship2, receivedIntArray)){
                         if(!gameController.ship2.isAfloat()){
                             gui.patrolShip2.setText("PATROL SHIP\n" + "Status: " + gui.afloatStatusFlase);
                         }
-                        return;
-                    }
-                    if(shipHit(gameController.ship4, receivedIntArray)){
+                    } else if(shipHit(gameController.ship4, receivedIntArray)){
                         if(!gameController.ship4.isAfloat()){
                             gui.aircraftCarrier2.setText("AIRCRAFT CARRIER\n" + "Status: " + gui.afloatStatusFlase);
                         }
-                        return;
+                    } else {
+                        int leftSide = receivedIntArray[0];
+                        int rightSide = receivedIntArray[1];
+                        gui.buttons[leftSide][rightSide].setIcon(Gui.bomb);
+                        gui.buttons[leftSide][rightSide].setDisabledIcon(Gui.bomb);
+                        gui.buttons[leftSide][rightSide].setEnabled(false);
                     }
-                    int leftSide = receivedIntArray[0];
-                    int rightSide = receivedIntArray[1];
-                    gui.buttons[leftSide][rightSide].setIcon(Gui.bomb);
-                    gui.buttons[leftSide][rightSide].setDisabledIcon(Gui.bomb);
-                    gui.buttons[leftSide][rightSide].setEnabled(false);
+
                 }
             }catch(ClassNotFoundException classNotFoundException) {
                 JOptionPane.showMessageDialog(null, "\n idk what that user sent!");
