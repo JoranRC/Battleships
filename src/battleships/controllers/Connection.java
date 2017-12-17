@@ -4,6 +4,8 @@ import battleships.models.Ship;
 import battleships.views.Gui;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -12,6 +14,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.TimerTask;
+import java.util.Timer;
 
 public class Connection {
 
@@ -28,11 +32,75 @@ public class Connection {
     private boolean inputListening = true;
     private String serverIP;
 
+    Timer timer = new Timer();
+    TimerTask task = new TimerTask() {
+        public void run() {
+            inputBegin();
+        }};
+
     public Connection(Gui gui, Game gameController) {
         this.gui = gui;
         this.gameController = gameController;
         gui.disableButtonsBoard2();
         gui.disableButtonsBoard();
+
+        gui.connect.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent event) {
+                        noConnection = false;
+                        serverIP = JOptionPane.showInputDialog("What is the IP adres of the host?");
+                        try {
+                            connection = new Socket(InetAddress.getByName(serverIP), 6789);
+                            SetupStreams();
+                            timer.schedule(task, 1000);
+                            gui.connect.setEnabled(false);
+                            gui.enableButtonsBoard2();
+                        }catch(IOException ioException) {
+                            ioException.printStackTrace();
+                            JOptionPane.showMessageDialog(null, "This server is unreacheable or not online");
+                        }
+
+                    }
+                });
+        gui.sendCoordinates.addActionListener(
+
+                new ActionListener() {
+
+                    public void actionPerformed(ActionEvent event) {
+                        ArrayList<Ship> shipsToSend = new ArrayList<Ship>();
+                        shipsToSend.add(gameController.ship1);
+                        shipsToSend.add(gameController.ship2);
+                        shipsToSend.add(gameController.ship3);
+                        shipsToSend.add(gameController.ship4);
+                        try {
+                            output.writeObject(shipsToSend);
+                            output.flush();
+                            gui.sendCoordinates.setEnabled(false);
+                            gui.enableButtonsBoard();
+                        }catch(IOException ioException) {
+                            ioException.printStackTrace();
+                        };
+                    }
+                });
+        gui.closeconnection.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent event) {
+                        try {
+                            connection.close();
+                            serverConnection.close();
+                            server.close();
+                            output.close();
+                            input.close();
+                            noConnection = false;
+                            inputListening2 = false;
+                            inputListening = false;
+                        }catch(IOException ioException) {
+                            ioException.printStackTrace();
+                        }
+                    }
+                });
+
+
         while(noConnection == true) {
             try {
                 server = new ServerSocket(6789, 10);
