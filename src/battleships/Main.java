@@ -10,6 +10,7 @@ public class Main {
         Gui gui = new Gui();
         gui.disableButtonsBoard();
         gui.disableButtonsBoard2();
+        gui.sendCoordinates.setEnabled(false);
         Game game = new Game(gui);
         Connection connection = new Connection(gui,game);
     }

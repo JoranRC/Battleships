@@ -228,6 +228,7 @@ public class Game {
                 case 4:
                     ship4 = new Ship(orientation, true, shipLength, approvedLocation);
                     gui.disableButtonsBoard();
+                    gui.sendCoordinates.setEnabled(true);
                     break;
                 default:
                     break;

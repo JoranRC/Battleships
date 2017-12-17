@@ -48,14 +48,14 @@ public class Gui {
 
         for(int i=0; i<buttons.length; i++) {
             for(int j=0; j<buttons[i].length; j++) {
-                buttons[i][j] = new JButton(i + " " + j);
+                buttons[i][j] = new JButton();
                 board2.add(buttons[i][j]);
             }
         }
 
         for(int i=0; i<buttons2.length; i++) {
             for(int j=0; j<buttons2[i].length; j++) {
-                buttons2[i][j] = new JButton(i + " " + j);
+                buttons2[i][j] = new JButton();
                 board.add(buttons2[i][j]);
             }
         }
@@ -92,8 +92,8 @@ public class Gui {
         fill.setBackground(Color.WHITE);
         infoPanelRight.setPreferredSize(new Dimension(210, 460));
         infoPanelRight.setBackground(Color.WHITE);
-        infoPanelRight.setBorder(BorderFactory.createTitledBorder(null, "Schepen tegenstander", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, new Font("times new roman",Font.PLAIN, 16), Color.BLUE));
-        infoPanelLeft.setBorder(BorderFactory.createTitledBorder(null, "Eigen schepen",TitledBorder.CENTER, TitledBorder.ABOVE_TOP, new Font("times new roman",Font.PLAIN, 16), Color.BLUE));
+        infoPanelRight.setBorder(BorderFactory.createTitledBorder(null, "Opponent's ships", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, new Font("times new roman",Font.PLAIN, 16), Color.BLUE));
+        infoPanelLeft.setBorder(BorderFactory.createTitledBorder(null, "Your ships",TitledBorder.CENTER, TitledBorder.ABOVE_TOP, new Font("times new roman",Font.PLAIN, 16), Color.BLUE));
         infoPanelLeft.setPreferredSize(new Dimension(210, 460));
         infoPanelLeft.setBackground(Color.WHITE);
         sidePanelLeft.setPreferredSize(new Dimension(210,540));
