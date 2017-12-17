@@ -83,12 +83,6 @@ public class Game {
                 gui.buttons2[i][j].addActionListener(handler);
             }
         }
-
-
-
-        int[] integerArrayTest = {0,0};
-        HandlerClass handler = new HandlerClass(integerArrayTest, this);
-        gui.buttons[0][0].addActionListener(handler);
     }
 
     private ArrayList<int[]> returnApprovedLocation(int orientation, int shipLength, int[] startLocation){
