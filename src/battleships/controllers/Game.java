@@ -33,6 +33,18 @@ public class Game {
         this.gui = gui;
 
         //Let OP! Puur om te testen!
+        int[] test8 = {4,1};
+        ArrayList<int[]> testArrayLocation3 = new ArrayList<>();
+        testArrayLocation3.add(test8);
+        shipOP = new Ship(orientation, true,1, testArrayLocation3);
+
+        int[] test9 = {6,1};
+        int[] test10 = {6,2};
+        ArrayList<int[]> testArrayLocation4 = new ArrayList<>();
+        testArrayLocation4.add(test9);
+        testArrayLocation4.add(test10);
+        ship2OP = new Ship(orientation, true,2, testArrayLocation4);
+
         int[] test1 = {2,1};
         int[] test2 = {2,2};
         int[] test3 = {2,3};
@@ -41,6 +53,19 @@ public class Game {
         testArrayLocation.add(test2);
         testArrayLocation.add(test3);
         ship3OP = new Ship(orientation, true,3, testArrayLocation);
+
+
+        int[] test4 = {2,5};
+        int[] test5 = {2,6};
+        int[] test6 = {2,7};
+        int[] test7 = {2,8};
+        ArrayList<int[]> testArrayLocation2 = new ArrayList<>();
+        testArrayLocation2.add(test4);
+        testArrayLocation2.add(test5);
+        testArrayLocation2.add(test6);
+        testArrayLocation2.add(test7);
+        ship4OP = new Ship(orientation, true,4, testArrayLocation2);
+
 
         //hier begint het echte werk pas!
         for(int i=0; i<gui.buttons.length; i++) {
