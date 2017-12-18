@@ -56,6 +56,7 @@ public class HandlerClass2 implements ActionListener {
     public void actionPerformed(ActionEvent event) {
         int leftSide = arguments[0];
         int rightSide = arguments[1];
+        gui.buttons2[leftSide][rightSide].setEnabled(false);
         try {
             Connection.output.writeObject(arguments);
             Connection.output.flush();

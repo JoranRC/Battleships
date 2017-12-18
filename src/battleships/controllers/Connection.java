@@ -85,14 +85,14 @@ public class Connection {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
                         try {
+                            noConnection = false;
+                            inputListening2 = false;
+                            inputListening = false;
                             connection.close();
                             serverConnection.close();
                             server.close();
                             output.close();
                             input.close();
-                            noConnection = false;
-                            inputListening2 = false;
-                            inputListening = false;
                         }catch(IOException ioException) {
                             ioException.printStackTrace();
                         }
