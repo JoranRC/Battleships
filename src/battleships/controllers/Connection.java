@@ -82,8 +82,7 @@ public class Connection {
                     }
                 });
         gui.closeconnection.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent event) {
+                event -> {
                         try {
                             noConnection = false;
                             inputListening2 = false;
@@ -97,7 +96,7 @@ public class Connection {
                             ioException.printStackTrace();
                         }
                     }
-                });
+                );
 
 
         while(noConnection == true) {
